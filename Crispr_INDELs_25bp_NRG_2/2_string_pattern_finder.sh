@@ -8,6 +8,8 @@
 # Created by: Sam Khalouei
 # Purpose: Runs the accompanying "2acs_string_pattern_finder.py" file on each sample
 
+## How to run: Run the script with no argument
+
 module load samtools
 module load bcftools
 module load bedtools
@@ -21,5 +23,5 @@ while IFS='' read -r VCF || [[ -n "$VCF" ]]; do
 	#input = ${VCF}_2padd.indels.vcf
 	python 2acs_string_pattern_finder.py Indels_25bp_Ref_eitherside/${sample}_Indels_25bp_eitherSide_2padd.txt > Indels_25bp_Ref_eitherside/${sample}_Indels_25bp_eitherSide_2padd_match.txt
 
-done < $1
+done < new_filtered_2padd.indels.vcf_All.txt
 

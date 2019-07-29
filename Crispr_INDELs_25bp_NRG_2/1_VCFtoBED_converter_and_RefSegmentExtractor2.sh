@@ -9,24 +9,25 @@
 # Purpose: This script works with the accompanied "1acs_IndelBEDfileModifier.py" file. It uses “bedtools slop” to add 25bp to each side
 #  of the generated BED file and using “samtools faidx” obtains the reference region for each interval of this BED file
 
+## How to run: Run this script with no argument
+
 module load samtools
 module load bcftools
 module load bedtools
 
 
 while IFS='' read -r VCF || [[ -n "$VCF" ]]; do
-	input=${VCF}_2padd.indels.vcf
-	dir=$(dirname $input)
+	dir=$(dirname $VCF)
 	sample=$(basename $(dirname $(dirname $(dirname $dir))))
 	echo $sample
 
 
 	## Generate a BED file from the provided input INDELs VCF file
-	python 1acs_IndelBEDfileModifier.py $input > $dir/${sample}_Indels_2padd.BED &&
+	python 1acs_IndelBEDfileModifier.py $VCF > $dir/${sample}_Indels_2padd.BED &&
 
 
 	## Padd the generated BED file by 20 on either side of the Indel using "bedtools slop" and call it "_padd25.BED"
-	bedtools slop -i $dir/${sample}_Indels_2padd.BED -g chrom_sizes.txt -b 25 > $dir/${sample}_Indels_2padd_padd25.BED
+	bedtools slop -i $dir/${sample}_Indels_2padd.BED -g 1_chrom_sizes.txt -b 25 > $dir/${sample}_Indels_2padd_padd25.BED
 
 
 	mkdir -p Indels_25bp_Ref_eitherside
@@ -47,5 +48,5 @@ while IFS='' read -r VCF || [[ -n "$VCF" ]]; do
 		echo "------------------------------------------" >> Indels_25bp_Ref_eitherside/${sample}_Indels_25bp_eitherSide_2padd.txt
 	done < $dir/${sample}_Indels_2padd_padd25.BED
 
-done < $1
+done < new_filtered_2padd.indels.vcf_All.txt
 

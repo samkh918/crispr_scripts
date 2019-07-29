@@ -2,8 +2,8 @@ import os, sys, re, string
 import datetime, subprocess
 
 # Created by: Sam Khalouei
-# Purpose: Converts the reference sequence to upper case and then sets "match=re.finditer('AG|GG,myList[k+1].upper())" on it to obtain matches to AG and GG.
-#  "match" then can be used to obtain the position of match to the output file
+# Purpose: Converts the reference sequence to upper case and then sets "match=re.finditer('AG|GG,myList[k+1].upper())" on it to 
+#   obtain matches to AG and GG. "match" then can be used to obtain the position of match to the output file
 
 inputFile = sys.argv [ 1 ]
 
